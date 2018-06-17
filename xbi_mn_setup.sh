@@ -1,15 +1,15 @@
 #!/bin/bash
 
 TMP_FOLDER=$(mktemp -d)
-CONFIG_FILE='Legion.conf'
-CONFIGFOLDER='/root/.Legion'
-COIN_DAEMON='legiond'
+CONFIG_FILE='xbi.conf'
+CONFIGFOLDER='/root/.XBI'
+COIN_DAEMON='xbid'
 COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/tofke/XBI-MN-setup/blob/master/xbi-ubuntu-16.04-x86_64.tar.gz'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
-COIN_NAME='legion'
-COIN_PORT=10018
-RPC_PORT=10019
+COIN_NAME='xbi'
+COIN_PORT=7250
+RPC_PORT=7251
 
 NODEIP=$(curl -s4 icanhazip.com)
 
