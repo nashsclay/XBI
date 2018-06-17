@@ -200,25 +200,14 @@ apt-add-repository -y ppa:bitcoin/bitcoin #>/dev/null 2>&1
 echo -e "Installing required packages, it may take some time to finish.${NC}"
 apt-get update #>/dev/null 2>&1
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
-build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev \ libdb4.8 libdb4.8++ libboost-system1.58.0 libboost-filesystem1.58.0 \ 
+build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev \
+libdb4.8 libdb4.8++ libboost-system1.58.0 libboost-filesystem1.58.0 \ 
 libboost-program-options1.58.0 libboost-thread1.58.0 libssl1.0.0 libminiupnpc10 libevent-2.0-5 \
 libevent-pthreads-2.0-5 libevent-core-2.0-5 libminiupnpc-dev libzmq3-dev git nano tmux curl wget pwgen libzmq3-dev libboost-all-dev libboost-system-dev libboost-filesystem-dev libboost-chrono-dev libboost-program-options-dev libboost-test-dev libboost-thread-dev #>/dev/null 2>&1
 apt-get install -y libgmp3-dev #>/dev/null 2>&1
-sudo apt-get install g++ python-dev autotools-dev libicu-dev libbz2-dev
-wget -O boost_1_58_0.tar.gz https://sourceforge.net/projects/boost/files/boost/1.58.0/boost_1_58_0.tar.gz/download
-tar -xvzf boost_1_58_0.tar.gz
-cd boost_1_58_0/
 
+read -p "Hello"
 
-./bootstrap.sh --prefix=/usr/local
-user_configFile=`find $PWD -name user-config.jam`
-echo "using mpi ;" >> $user_configFile
-n=`cat /proc/cpuinfo | grep "cpu cores" | uniq | awk '{print $NF}'`
-sudo ./b2 --with=all -j $n install
-sudo sh -c 'echo "/usr/local/lib" >> /etc/ld.so.conf.d/local.conf'
-sudo ldconfig
-
-read -p "test test test"
 if [ "$?" -gt "0" ];
   then
     echo -e "${RED}Not all required packages were installed properly. Try to install them manually by running the following commands:${NC}\n"
