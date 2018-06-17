@@ -25,7 +25,7 @@ function download_node() {
   wget -q $COIN_TGZ
   compile_error
   tar -xzvf $COIN_ZIP >/dev/null 2>&1
-  cd Legion
+  cd bin
   chmod +x $COIN_DAEMON
   cp $COIN_DAEMON $COIN_PATH
   cd ~ >/dev/null
@@ -119,6 +119,11 @@ masternode=1
 masternodeaddr=$NODEIP:$COIN_PORT
 externalip=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
+addnode=45.76.91.190:7250
+addnode=45.32.197.20:7250
+addnode=104.238.162.68:7250
+addnode=46.101.50.84:7250
+addnode=69.90.132.120:7250
 EOF
 }
 
@@ -194,8 +199,9 @@ apt-add-repository -y ppa:bitcoin/bitcoin >/dev/null 2>&1
 echo -e "Installing required packages, it may take some time to finish.${NC}"
 apt-get update >/dev/null 2>&1
 apt-get install -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" make software-properties-common \
-build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev \
-libdb5.3-dev libdb5.3++-dev libminiupnpc-dev libzmq3-dev git nano tmux >/dev/null 2>&1
+build-essential libtool autotools-dev automake pkg-config libssl-dev libevent-dev bsdmainutils libboost-all-dev \ libdb4.8 libdb4.8++ libboost-system1.58.0 libboost-filesystem1.58.0 \ 
+libboost-program-options1.58.0 libboost-thread1.58.0 libssl1.0.0 libminiupnpc10 libevent-2.0-5 \
+libevent-pthreads-2.0-5 libevent-core-2.0-5 libminiupnpc-dev libzmq3-dev git nano tmux curl wget pwgen >/dev/null 2>&1
 apt-get install -y libgmp3-dev >/dev/null 2>&1
 if [ "$?" -gt "0" ];
   then
