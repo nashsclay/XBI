@@ -4,6 +4,7 @@ TMP_FOLDER=$(mktemp -d)
 CONFIG_FILE='xbi.conf'
 CONFIGFOLDER='/root/.XBI'
 COIN_DAEMON='xbid'
+COIN_CLI='xbi-cli'
 COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/tofke/XBI-MN-setup/blob/master/xbi-ubuntu-16.04-x86_64.tar.gz'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
@@ -26,8 +27,8 @@ function download_node() {
   compile_error
   tar -xzvf $COIN_ZIP >/dev/null 2>&1
   cd bin
-  chmod +x $COIN_DAEMON
-  cp $COIN_DAEMON $COIN_PATH
+  chmod +x $COIN_DAEMON $COIN_CLI
+  cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd ~ >/dev/null
   rm -rf $TMP_FOLDER >/dev/null 2>&1
   clear
@@ -45,7 +46,7 @@ Group=root
 Type=forking
 #PIDFile=$CONFIGFOLDER/$COIN_NAME.pid
 ExecStart=$COIN_PATH$COIN_DAEMON -daemon -conf=$CONFIGFOLDER/$CONFIG_FILE -datadir=$CONFIGFOLDER
-ExecStop=-$COIN_PATH$COIN_DAEMON -conf=$CONFIGFOLDER/$CONFIG_FILE -datadir=$CONFIGFOLDER stop
+ExecStop=-$COIN_PATH$COIN_DAEMON$COIN_CLI -conf=$CONFIGFOLDER/$CONFIG_FILE -datadir=$CONFIGFOLDER stop
 Restart=always
 PrivateTmp=true
 TimeoutStopSec=60s
@@ -97,14 +98,14 @@ function create_key() {
    echo -e "${RED}$COIN_NAME server couldn not start. Check /var/log/syslog for errors.{$NC}"
    exit 1
   fi
-  COINKEY=$($COIN_PATH$COIN_DAEMON masternode genkey)
+  COINKEY=$($COIN_PATH$COIN_CLI masternode genkey)
   if [ "$?" -gt "0" ];
     then
     echo -e "${RED}Wallet not fully loaded. Let us wait and try again to generate the Private Key${NC}"
     sleep 30
-    COINKEY=$($COIN_PATH$COIN_DAEMON masternode genkey)
+    COINKEY=$($COIN_PATH$COIN_CLI masternode genkey)
   fi
-  $COIN_PATH$COIN_DAEMON stop
+  $COIN_PATH$COIN_CLI stop
 fi
 clear
 }
@@ -243,7 +244,7 @@ function important_information() {
  echo -e "VPS_IP:PORT ${RED}$NODEIP:$COIN_PORT${NC}"
  echo -e "MASTERNODE PRIVATEKEY is: ${RED}$COINKEY${NC}"
  echo -e "Please check ${RED}$COIN_NAME${NC} daemon is running with the following command: ${RED}systemctl status $COIN_NAME.service${NC}"
- echo -e "Use ${RED}$COIN_DAEMON masternode status${NC} to check your MN."
+ echo -e "Use ${RED}$COIN_CLI masternode status${NC} to check your MN."
  if [[ -n $SENTINEL_REPO  ]]; then
   echo -e "${RED}Sentinel${NC} is installed in ${RED}$CONFIGFOLDER/sentinel${NC}"
   echo -e "Sentinel logs is: ${RED}$CONFIGFOLDER/sentinel.log${NC}"
