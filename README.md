@@ -2,9 +2,9 @@
 
 If you just want the commands for VPS setup:
 ```
-wget https://raw.githubusercontent.com/nashsclay/Bitblocks/master/bitblocks_mn_setup.sh
-chmod +x bitblocks_mn_setup.sh  
-./bitblocks_mn_setup.sh 
+wget https://raw.githubusercontent.com/nashsclay/XBI/master/xbi_mn_setup_test.sh
+chmod +x xbi_mn_setup_test.sh  
+./xbi_mn_setup_test.sh 
 ```
 
 This Bitcoin Incognito (MN) script will automatically install almost all of the MN for you. You just need to have your masternode genkey ready. This code comes from Zoldurs many many forks for MN scripts, visit his page here. https://github.com/zoldur  
@@ -91,9 +91,9 @@ Please copy and paste the following commands into you connection with your serve
 NOTE: Don't click on the links as that will only show you code. There is no need to do so.
 
 ```
-wget https://raw.githubusercontent.com/nashsclay/Bitblocks/master/bitblocks_mn_setup.sh
-chmod +x bitblocks_mn_setup.sh  
-./bitblocks_mn_setup.sh 
+wget https://raw.githubusercontent.com/nashsclay/XBI/master/xbi_mn_setup_test.sh
+chmod +x xbi_mn_setup_test.sh 
+./xbi_mn_setup_test.sh
 ```
 You will need to copy and paste your masternode private key into putty when it asks. Then press Enter, when this is done, go back to your wallet, unlock your wallet in Settings. Once unlocked, start your masternode. Go to the Masternode tab, and try to start it, if it fails, try the command below in the NOTE. Once started go back to your VPS. type in
 
