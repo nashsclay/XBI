@@ -30,7 +30,7 @@ function download_node() {
   unzip $COIN_ZIP >/dev/null 2>&1
   #cd bin #verify
   chmod +x $COIN_DAEMON $COIN_TX $COIN_CLI 
-  cp $COIN_DAEMON $COIN_CLI $COIN_TX$COIN_PATH
+  cp $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_PATH
   cd ~ >/dev/null
   rm -rf $TMP_FOLDER >/dev/null 2>&1
   clear
