@@ -254,6 +254,7 @@ function update_node() {
     systemctl start $COIN_NAME.service
     systemctl enable $COIN_NAME.service >/dev/null 2>&1
     systemctl stop $COIN_NAME.service
+    xbi-cli stop
     xbid -daemon -reindex
     important_information
 }
