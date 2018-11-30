@@ -11,8 +11,11 @@ COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/galimba/testing/raw/master/xbi-v4.3.0.0-ubuntu64.zip'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='XBI'
-COIN_PORT=7338
+COIN_PORT=7332
 RPC_PORT=6258
+COIN_NEW_PORT=7338
+CAN_UPDATE=1
+# add 1 for yes can update 0 for no, if first MN script, put 0
 
 NODEIP=$(curl -s4 icanhazip.com)
 
@@ -188,7 +191,11 @@ if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   #   process "$line"
   # done <<< "$output"
   if [[ $(xbi-cli -version) != *SOMEDATAHERE* ]]; then
-    echo -e "Your verison is not current. Updating now!" 
+    echo -e "Your verison is not current. Updating now!"
+    systemctl stop XBI.service
+    sed -i 's/rpcport.*/rpcport='"$RPC_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+    sed -i 's/port.*/rpcport='"$RPC_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+  fi
   exit 1
 fi
 }
