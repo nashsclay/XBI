@@ -11,9 +11,10 @@ COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/galimba/testing/raw/master/xbi-v4.3.0.0-ubuntu64.zip'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='XBI'
-COIN_PORT=7332
+COIN_PORT=7338
 RPC_PORT=6258
-COIN_NEW_PORT=7338
+RPC_OLD_PORT=6250
+COIN_OLD_PORT=7332
 CAN_UPDATE=1
 # add 1 for yes can update 0 for no, if first MN script, put 0
 
@@ -185,16 +186,10 @@ fi
 
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is already installed.${NC}"
-  echo -e "Verifying if on updated version..."
-  # output=$(xbi-cli -version)
-  # while read -r line; do
-  #   process "$line"
-  # done <<< "$output"
-  if [[ $(xbi-cli -version) != *SOMEDATAHERE* ]]; then
-    echo -e "Your verison is not current. Updating now!"
-    systemctl stop XBI.service
-    sed -i 's/rpcport.*/rpcport='"$RPC_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
-    sed -i 's/port.*/rpcport='"$RPC_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+  if [[ "$CAN_UPDATE" -eq "1" ]] ; then
+    if [[ $(xbi-cli -version) != *SOMEDATAHERE* ]]; then
+      update_node
+    fi
   fi
   exit 1
 fi
@@ -245,6 +240,22 @@ function create_swap() {
   echo -e "${GREEN}The server running with at least 2G of RAM, or a SWAP file is already in place.${NC}"
  fi
  clear
+}
+
+function update_node() {
+  echo -e "Verifying if on updated version..."
+  echo -e "Your verison is not current. Updating now!"
+    systemctl stop XBI.service
+    sed -i 's/rpcport.*/rpcport='"$RPC_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+    sed -i 's/port='"$COIN_OLD_PORT"'/port='"$COIN_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+    sed -i 's/externalip=.*.:'"$COIN_OLD_PORT"'/externalip='"$NODEIP"':'"$COIN_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+    systemctl daemon-reload
+    sleep 3
+    systemctl start $COIN_NAME.service
+    systemctl enable $COIN_NAME.service >/dev/null 2>&1
+    systemctl stop $COIN_NAME.service
+    xbid -daemon -reindex
+    important_information
 }
 
 function important_information() {
