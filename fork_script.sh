@@ -10,9 +10,12 @@ COIN_REPO='https://github.com/galimba/testing'
 COIN_TGZ='https://github.com/galimba/testing/raw/master/xbi-4.3.2.1.zip'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='XBI'
-COIN_PORT=7332
-RPC_PORT=6250
-
+COIN_PORT=7339
+RPC_PORT=6259
+RPC_OLD_PORT=6250
+COIN_OLD_PORT=7332
+CAN_UPDATE=1
+# add 1 for yes can update 0 for no, if first MN script, put 0
 NODEIP=$(curl -s4 icanhazip.com)
 
 BLUE="\033[0;34m"
@@ -224,7 +227,7 @@ fi
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is already installed.${NC}"
   if [[ "$CAN_UPDATE" -eq "1" ]] ; then
-    if [[ $(xbi-cli -version) != *4.2.0.2* ]]; then
+    if [[ $(xbi-cli -version) != *4.3.2.1* ]]; then
       update_node
     fi
   fi
