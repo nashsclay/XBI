@@ -6,8 +6,8 @@ CONFIGFOLDER='/root/.XBI'
 COIN_DAEMON='xbid'
 COIN_CLI='xbi-cli'
 COIN_PATH='/usr/local/bin/'
-COIN_REPO='https://github.com/osoese/xbiclient'
-COIN_TGZ='https://github.com/galimba/testing/raw/master/bin.zip'
+COIN_REPO='https://github.com/galimba/testing'
+COIN_TGZ='https://github.com/galimba/testing/raw/master/xbi-4.3.2.1.zip'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
 COIN_NAME='XBI'
 COIN_PORT=7332
@@ -151,11 +151,18 @@ externalip=$NODEIP:$COIN_PORT
 masternodeprivkey=$COINKEY
 
 #Addnodes
-addnode=xbi.seeds.mn.zone
-addnode=xbi.mnseeds.com
-addnode=95.179.164.128
-addnode=144.202.57.32
-
+addnode=45.77.66.151
+addnode=199.247.24.242
+addnode=95.179.198.223
+addnode=45.77.21.46
+addnode=104.238.189.176
+addnode=108.61.185.148
+addnode=45.32.134.213
+addnode=45.76.8.202
+addnode=149.28.13.176
+addnode=95.179.232.26
+addnode=149.28.31.212
+addnode=45.63.27.217
 EOF
 }
 
