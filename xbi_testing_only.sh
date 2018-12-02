@@ -6,7 +6,6 @@ CONFIG_FILE='xbi.conf'
 CONFIGFOLDER='/root/.XBI'
 COIN_DAEMON='xbid'
 COIN_CLI='xbi-cli'
-COIN_TX='xbi-tx'
 COIN_PATH='/usr/local/bin/'
 COIN_TGZ='https://github.com/galimba/testing/raw/master/xbi-v4.3.0.0-ubuntu64.zip'
 COIN_ZIP=$(echo $COIN_TGZ | awk -F'/' '{print $NF}')
@@ -33,8 +32,8 @@ function download_node() {
   compile_error
   unzip $COIN_ZIP >/dev/null 2>&1
   #cd bin #verify
-  chmod +x $COIN_DAEMON $COIN_TX $COIN_CLI 
-  cp $COIN_DAEMON $COIN_CLI $COIN_TX $COIN_PATH
+  chmod +x $COIN_DAEMON $COIN_CLI 
+  cp $COIN_DAEMON $COIN_CLI $COIN_PATH
   cd ~ >/dev/null
   rm -rf $TMP_FOLDER >/dev/null 2>&1
   clear
