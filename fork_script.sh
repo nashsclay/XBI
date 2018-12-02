@@ -15,7 +15,6 @@ RPC_PORT=6259
 RPC_OLD_PORT=6250
 COIN_OLD_PORT=7332
 CAN_UPDATE=1
-UPDATE_ONLY=0
 # add 1 for yes can update 0 for no, if first MN script, put 0
 NODEIP=$(curl -s4 icanhazip.com)
 
@@ -294,6 +293,25 @@ function update_node() {
     sed -i 's/rpcport.*/rpcport='"$RPC_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
     sed -i 's/port='"$COIN_OLD_PORT"'/port='"$COIN_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
     sed -i 's/externalip=.*.:'"$COIN_OLD_PORT"'/externalip='"$NODEIP"':'"$COIN_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+    echo "#Addnodes" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=45.77.66.151" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=199.247.24.242" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=95.179.198.223" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=45.77.21.46" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=104.238.189.176" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=108.61.185.148" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=45.32.134.213" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=45.76.8.202" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=149.28.13.176" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=95.179.232.26" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=149.28.31.212" >> $CONFIGFOLDER/$CONFIG_FILE
+    echo "addnode=45.63.27.217" >> $CONFIGFOLDER/$CONFIG_FILE
+    sudo ufw delete allow $COIN_OLD_PORT/tcp > /dev/null 2>&1
+    sudo rm -rf /usr/local/bin/$COIN_CLI /usr/local/bin/$COIN_DAEMON> /dev/null 2>&1
+    sudo rm -rf /usr/bin/$COIN_CLI /usr/bin/$COIN_DAEMON > /dev/null 2>&1
+    sudo rm -rf /tmp/*
+    download_node
+    enable_firewall
     systemctl daemon-reload
     sleep 3
     systemctl start $COIN_NAME.service
