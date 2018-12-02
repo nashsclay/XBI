@@ -216,6 +216,11 @@ fi
 
 if [ -n "$(pidof $COIN_DAEMON)" ] || [ -e "$COIN_DAEMOM" ] ; then
   echo -e "${RED}$COIN_NAME is already installed.${NC}"
+  if [[ "$CAN_UPDATE" -eq "1" ]] ; then
+    if [[ $(xbi-cli -version) != *4.2.0.2* ]]; then
+      update_node
+    fi
+  fi
   exit 1
 fi
 }
@@ -269,6 +274,23 @@ function create_swap() {
   echo -e "${GREEN}The server running with at least 2G of RAM, or a SWAP file is already in place.${NC}"
  fi
  clear
+}
+
+function update_node() {
+  echo -e "Verifying if on updated version..."
+  echo -e "Your verison is not current. Updating now!"
+    systemctl stop XBI.service
+    sed -i 's/rpcport.*/rpcport='"$RPC_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+    sed -i 's/port='"$COIN_OLD_PORT"'/port='"$COIN_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+    sed -i 's/externalip=.*.:'"$COIN_OLD_PORT"'/externalip='"$NODEIP"':'"$COIN_PORT"'/' $CONFIGFOLDER/$CONFIG_FILE
+    systemctl daemon-reload
+    sleep 3
+    systemctl start $COIN_NAME.service
+    systemctl enable $COIN_NAME.service >/dev/null 2>&1
+    systemctl stop $COIN_NAME.service
+    xbi-cli stop
+    xbid -daemon -reindex
+    important_information
 }
 
 function important_information() {
