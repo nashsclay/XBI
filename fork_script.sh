@@ -15,6 +15,7 @@ RPC_PORT=6259
 RPC_OLD_PORT=6250
 COIN_OLD_PORT=7332
 CAN_UPDATE=1
+UPDATE_ONLY=0
 # add 1 for yes can update 0 for no, if first MN script, put 0
 NODEIP=$(curl -s4 icanhazip.com)
 
