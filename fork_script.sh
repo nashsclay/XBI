@@ -336,7 +336,7 @@ function important_information() {
  echo -e "${GREEN}VPS_IP:${NC}${GREEN}$NODEIP:$COIN_PORT${NC}"
  if [ "$SHOW_COIN_KEY" -eq "1" ];
    then
-      echo -e "${GREEN}MASTERNODE GENKEY is:${NC}${PURPLE}$$OLDKEY${NC}"
+      echo -e "${GREEN}MASTERNODE GENKEY is:${NC}${PURPLE}$OLDKEY${NC}"
    else
       echo -e "${GREEN}MASTERNODE GENKEY is:${NC}${PURPLE}$COINKEY${NC}"
  fi
