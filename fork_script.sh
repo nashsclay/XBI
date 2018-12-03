@@ -319,7 +319,7 @@ function update_node() {
     systemctl stop $COIN_NAME.service
     xbi-cli stop
     xbid -daemon -reindex
-    $SHOW_COIN_KEY="1"
+    SHOW_COIN_KEY=$"1"
     OLDKEY=$(awk -F'=' '/masternodeprivkey/ {print $2}' $CONFIGFOLDER/$CONFIG_FILE 2> /dev/null)
     important_information
 }
