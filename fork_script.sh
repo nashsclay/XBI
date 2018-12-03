@@ -15,6 +15,7 @@ RPC_PORT=6259
 RPC_OLD_PORT=6250
 COIN_OLD_PORT=7332
 CAN_UPDATE=1
+SHOW_COIN_KEY=0
 # add 1 for yes can update 0 for no, if first MN script, put 0
 NODEIP=$(curl -s4 icanhazip.com)
 
@@ -318,6 +319,8 @@ function update_node() {
     systemctl stop $COIN_NAME.service
     xbi-cli stop
     xbid -daemon -reindex
+    $SHOW_COIN_KEY="1"
+    OLDKEY=$(awk -F'=' '/masternodeprivkey/ {print $2}' $CONFIGFOLDER/$CONFIG_FILE 2> /dev/null)
     important_information
 }
 
@@ -331,9 +334,15 @@ function important_information() {
  echo -e "${GREEN}Start:${NC}${RED}systemctl start $COIN_NAME.service${NC}"
  echo -e "${GREEN}Stop:${NC}${RED}systemctl stop $COIN_NAME.service${NC}"
  echo -e "${GREEN}VPS_IP:${NC}${GREEN}$NODEIP:$COIN_PORT${NC}"
- echo -e "${GREEN}MASTERNODE GENKEY is:${NC}${PURPLE}$COINKEY${NC}"
+ if [ "$SHOW_COIN_KEY" -eq "1" ];
+   then
+      echo -e "${GREEN}MASTERNODE GENKEY is:${NC}${PURPLE}$$OLDKEY${NC}"
+   else
+      echo -e "${GREEN}MASTERNODE GENKEY is:${NC}${PURPLE}$COINKEY${NC}"
+ fi
  echo -e "${BLUE}================================================================================================================================${NC}"
  echo -e "${CYAN}Ensure Node is fully SYNCED with BLOCKCHAIN before starting your Node :).${NC}"
+ echo -e "${CYAN}FIRST command may be slow to deliver response back. Give MN a few seconds to finish setup.${NC}"
  echo -e "${BLUE}================================================================================================================================${NC}"
  echo -e "${GREEN}Usage Commands.${NC}"
  echo -e "${GREEN}xbi-cli masternode status${NC}"
