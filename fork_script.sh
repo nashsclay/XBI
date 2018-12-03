@@ -40,7 +40,7 @@ function purgeOldInstallation() {
 		echo -e $OLDKEY
 	fi
     #remove old ufw port allow
-    sudo ufw delete allow $COIN_PORT/tcp > /dev/null 2>&1
+    sudo ufw delete allow $COIN_OLD_PORT/tcp > /dev/null 2>&1
     #remove old files
     rm rm -- "$0" > /dev/null 2>&1
     sudo rm -rf $CONFIGFOLDER > /dev/null 2>&1
