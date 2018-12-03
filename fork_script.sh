@@ -309,7 +309,6 @@ function update_node() {
     sudo ufw delete allow $COIN_OLD_PORT/tcp > /dev/null 2>&1
     sudo rm -rf /usr/local/bin/$COIN_CLI /usr/local/bin/$COIN_DAEMON> /dev/null 2>&1
     sudo rm -rf /usr/bin/$COIN_CLI /usr/bin/$COIN_DAEMON > /dev/null 2>&1
-    sudo rm -rf /tmp/*
     download_node
     enable_firewall
     systemctl daemon-reload
