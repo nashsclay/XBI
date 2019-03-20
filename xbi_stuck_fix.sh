@@ -9,7 +9,7 @@ cd /usr/local/bin/
 sudo apt-get install unrar
 echo "Script may appear frozen for a few seconds. This is normal."
 wget -c https://github.com/sub307/XBI-bootstrap/releases/download/417018/bootstrap417018.rar
-sudo unrar e bootstrap417018.rar
+sudo unrar e bootstrap417018.rar fix/
 sudo rm xbi-qt
 sudo rm -R ~/.XBI/backups/
 sudo rm -R ~/.XBI/blocks/
