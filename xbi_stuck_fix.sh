@@ -24,3 +24,5 @@ cd /usr/local/bin/
 systemctl start XBI.service
 cd ~
 echo "Masternode restarted. Any errors about files not existing is ok."
+echo
+echo "Please wait at least 3-5 mins before checking any commands as it is reindexing and configuring"
